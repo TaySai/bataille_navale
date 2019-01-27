@@ -37,15 +37,21 @@ if (isset($_POST['submit_form'])) {
         unset($shot_column);
         $form_error_message .= '- Les coordonnées de la colonne ne sont pas correctes<br/>';
     }
-
-    if ($form_error === false && isset($shot_line) && isset($shot_column)) {
-        // test if the person miss or touch, if touch the case blue it becomes red, and miss the case become gray
-        $rand_line = rand(1,10);
-        $rand_column = rand(1,10);
-        $message_virtual = doesItTouch($human_player, $rand_line, $rand_column, 'human_player');
-        $message_human = doesItTouch($virtual_player, $shot_line, $shot_column, 'virtual_player');
-    }
 }
+if ($form_error === false && isset($shot_line) && isset($shot_column)) {
+    // test if the person miss or touch, if touch the case blue it becomes red, and miss the case become gray
+    $rand_line = rand(1,10);
+    $rand_column = rand(1,10);
+    $message_virtual = doesItTouch($human_player, $rand_line, $rand_column, 'human_player');
+    $message_human = doesItTouch($virtual_player, $shot_line, $shot_column, 'virtual_player');
+}
+// we keep the values, so that if the person make a mistake in the form, we still cal get the infos about the last submit
+$_SESSION['shot_line'] = $shot_line;
+$_SESSION['shot_column'] = $shot_column;
+$_SESSION['rand_line'] = $rand_line;
+$_SESSION['rand_column'] = $rand_column;
+$_SESSION['message_virtual'] = $message_virtual;
+$_SESSION['message_human'] = $message_human;
 $human_fleet = countFleet($human_player, $length_virtual_player);
 $virtual_fleet = countFleet($virtual_player, $length_virtual_player);
 ?>
@@ -143,12 +149,12 @@ $virtual_fleet = countFleet($virtual_player, $length_virtual_player);
         </div>
         <?php if (isset($_POST['submit_form'])) { ?>
         <div>
-            <p>Resultat de votre attaque sur l'adversaire (ligne: <?php echo $shot_line ?>, colonne : <?php echo $shot_column ?>):</p>
-            <p><?php echo $message_human ?></p>
+            <p>Resultat de votre attaque sur l'adversaire (ligne: <?php echo $_SESSION['shot_line'] ?>, colonne : <?php echo $_SESSION['shot_column'] ?>):</p>
+            <p><?php echo $_SESSION['message_human'] ?></p>
             <p>Vous disposez de <?php echo $human_fleet ?> emplacement(s) actif(s)</p>
             <br>
-            <p>Resultat de l'attaque subie (ligne: <?php echo $rand_line ?>, colonne : <?php echo $rand_column ?>):</p>
-            <p><?php echo $message_virtual ?></p>
+            <p>Resultat de l'attaque subie (ligne: <?php echo $_SESSION['rand_line'] ?>, colonne : <?php echo $_SESSION['rand_column'] ?>):</p>
+            <p><?php echo $_SESSION['message_virtual'] ?></p>
             <p>Votre adversaire dispose de <?php echo $virtual_fleet ?> emplacement(s) actif(s)</p>
         </div>
         <?php } ?>
