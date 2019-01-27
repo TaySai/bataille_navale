@@ -1,0 +1,20 @@
+p.alert {
+    color: red;
+}
+.success {
+    color: green;
+}
+table, th, td {
+    border: 1px solid black;
+}
+td {
+    width: 30px; height: 30px;
+}
+.btn-restart {
+    color: blue;
+    text-decoration: none;
+}
+div {
+    float: left;
+    margin-right: 20px;
+}
