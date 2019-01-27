@@ -127,9 +127,6 @@ $virtual_fleet = countFleet($virtual_player, $length_virtual_player);
                                 case 1:
                                     $color = 'gray';
                                     break;
-                                case 2:
-                                    $color = 'blue';
-                                    break;
                                 case 3:
                                     $color = 'red';
                                     break;
